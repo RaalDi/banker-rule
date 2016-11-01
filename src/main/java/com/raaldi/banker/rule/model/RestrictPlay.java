@@ -1,17 +1,21 @@
 package com.raaldi.banker.rule.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.raaldi.banker.util.model.AbstractModel;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,8 +31,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -37,12 +39,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "restrict_play")
 @NamedQueries({ @NamedQuery(name = "RestrictPlay.findAll", query = "SELECT c FROM RestrictPlay c") })
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class RestrictPlay extends AbstractModel {
 
   private static final long serialVersionUID = -3936838944769073574L;
 
-  public RestrictPlay(final String playName, final Date startDate, final Date endDate) {
+  public RestrictPlay(final String playName, final LocalDateTime startDate, final LocalDateTime endDate) {
     this.setPlayName(playName);
     this.setStartDate(startDate);
     this.setEndDate(endDate);
@@ -53,7 +56,6 @@ public class RestrictPlay extends AbstractModel {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restrict-play-seq-gen")
   private long id;
 
-  @NonNull
   @NotNull
   @Column(name = "play_name", nullable = false, insertable = true, updatable = false)
   private String playName;
@@ -70,36 +72,19 @@ public class RestrictPlay extends AbstractModel {
           "restrict_play_id", "restricted_number" }))
   private Set<RestrictPlayNumber> numbers = Collections.emptySet();
 
-  @NonNull
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @NotNull
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "start_date", nullable = false)
-  private Date startDate;
+  @Column(name = "start_date", nullable = false, columnDefinition = "timestamp")
+  private LocalDateTime startDate;
 
-  @NonNull
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @NotNull
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "end_date", nullable = false)
-  private Date endDate;
+  @Column(name = "end_date", nullable = false, columnDefinition = "timestamp")
+  private LocalDateTime endDate;
 
   @NotNull
-  @Column(name = "active")
+  @Column(name = "active", nullable = false, columnDefinition = "boolean default false")
   private boolean active;
-
-  public void setStartDate(final Date startDate) {
-    this.startDate = startDate == null ? null : new Date(startDate.getTime());
-  }
-
-  public Date getStartDate() {
-    return startDate == null ? null : new Date(startDate.getTime());
-  }
-
-  public void setEndDate(final Date endDate) {
-    this.endDate = endDate == null ? null : new Date(endDate.getTime());
-  }
-
-  public Date getEndDate() {
-    return endDate == null ? null : new Date(endDate.getTime());
-  }
-
 }

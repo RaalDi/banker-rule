@@ -30,7 +30,7 @@ public class RestrictPlayService implements ModelService<RestrictPlay> {
   }
 
   @Override
-  public RestrictPlay findOne(final Long id) {
+  public RestrictPlay findOne(final long id) {
     return repository.findOne(id);
   }
 
@@ -45,7 +45,7 @@ public class RestrictPlayService implements ModelService<RestrictPlay> {
   }
 
   @Override
-  public boolean exists(final Long id) {
+  public boolean exists(final long id) {
     return repository.exists(id);
   }
 
