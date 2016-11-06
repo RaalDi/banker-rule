@@ -19,9 +19,12 @@ spring.jpa.properties:
   hibernate.cache.use_second_level_cache: true
   hibernate.cache.use_query_cache: true
   hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
-  hibernate.cache.provider_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+  # Use when Spring Security enable
+  # hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+  # Deprecated
+  # hibernate.cache.provider_class: org.hibernate.cache.ehcache.EhCacheProvider
 
-# EhCache extra config.
+# EhCache EXTRA config.
 #spring.cache.ehcache.config=classpath:config/ehcache.xml
 
 #Liquidbase
@@ -29,8 +32,8 @@ liquibase:
   changeLog: classpath:db/changelog-master.xml
 
 # Spring Session
-spring.session:
-  store-type: none
+# spring.session:
+#  store-type: none
   
 # Banker
 banker.security.jwt:

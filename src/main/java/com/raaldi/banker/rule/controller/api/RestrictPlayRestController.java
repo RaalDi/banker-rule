@@ -1,6 +1,6 @@
 package com.raaldi.banker.rule.controller.api;
 
-import com.raaldi.banker.rule.model.RestrictPlay;
+import com.raaldi.banker.rule.model.RestrictedPlay;
 import com.raaldi.banker.util.service.ModelService;
 
 import lombok.NoArgsConstructor;
@@ -26,31 +26,31 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class RestrictPlayRestController {
 
   @Autowired
-  ModelService<RestrictPlay> service;
+  ModelService<RestrictedPlay> service;
 
   @RequestMapping(method = RequestMethod.GET)
-  public ResponseEntity<Iterable<RestrictPlay>> getAll() {
-    Iterable<RestrictPlay> restrictPlays = service.findAll();
+  public ResponseEntity<Iterable<RestrictedPlay>> getAll() {
+    Iterable<RestrictedPlay> restrictPlays = service.findAll();
     if (restrictPlays.iterator().hasNext()) {
-      return new ResponseEntity<Iterable<RestrictPlay>>(restrictPlays, HttpStatus.OK);
+      return new ResponseEntity<Iterable<RestrictedPlay>>(restrictPlays, HttpStatus.OK);
     }
     // You many decide to return HttpStatus.NOT_FOUND
-    return new ResponseEntity<Iterable<RestrictPlay>>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<Iterable<RestrictedPlay>>(HttpStatus.NO_CONTENT);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<RestrictPlay> get(@PathVariable("id") final long id) {
+  public ResponseEntity<RestrictedPlay> get(@PathVariable("id") final long id) {
     log.info(String.format("Fetching RestrictPlay with id %s", id));
-    RestrictPlay restrictPlay = service.findOne(id);
+    RestrictedPlay restrictPlay = service.findOne(id);
     if (restrictPlay == null) {
       log.info(String.format("RestrictPlay with id %s not found", id));
-      return new ResponseEntity<RestrictPlay>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<RestrictedPlay>(HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<RestrictPlay>(restrictPlay, HttpStatus.OK);
+    return new ResponseEntity<RestrictedPlay>(restrictPlay, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/restric-play", method = RequestMethod.POST)
-  public ResponseEntity<Void> create(@RequestBody final RestrictPlay restrictPlay,
+  public ResponseEntity<Void> create(@RequestBody final RestrictedPlay restrictPlay,
       final UriComponentsBuilder uriBuilder) {
     log.info(String.format("Creating RestrictPlay %s", restrictPlay.toString()));
 
@@ -62,20 +62,20 @@ public class RestrictPlayRestController {
     service.save(restrictPlay);
 
     HttpHeaders headers = new HttpHeaders();
-    headers.setLocation(uriBuilder.path("/{id}").buildAndExpand(restrictPlay.getId()).toUri());
+    headers.setLocation(uriBuilder.path("/{id}").buildAndExpand(restrictPlay.getRestrictedPlayid()).toUri());
     return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public ResponseEntity<RestrictPlay> update(@PathVariable("id") final long id,
-      @RequestBody final RestrictPlay restrictPlay) {
+  public ResponseEntity<RestrictedPlay> update(@PathVariable("id") final long id,
+      @RequestBody final RestrictedPlay restrictPlay) {
     log.info(String.format("Updating RestrictPlay %s", id));
 
-    RestrictPlay currentRestrictPlay = service.findOne(id);
+    RestrictedPlay currentRestrictPlay = service.findOne(id);
 
     if (currentRestrictPlay == null) {
       log.info(String.format("RestrictPlay with id %s not found", id));
-      return new ResponseEntity<RestrictPlay>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<RestrictedPlay>(HttpStatus.NOT_FOUND);
     }
 
     currentRestrictPlay.setActive(restrictPlay.isActive());
@@ -89,33 +89,33 @@ public class RestrictPlayRestController {
      * TODO: Update entity model service
      */
     // userService.updateRestrictPlay(currentRestrictPlay);
-    return new ResponseEntity<RestrictPlay>(currentRestrictPlay, HttpStatus.OK);
+    return new ResponseEntity<RestrictedPlay>(currentRestrictPlay, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<RestrictPlay> delete(@PathVariable("id") final long id) {
+  public ResponseEntity<RestrictedPlay> delete(@PathVariable("id") final long id) {
     log.info(String.format("Fetching & Deleting RestrictPlay with id %s", id));
 
-    RestrictPlay restrictPlay = service.findOne(id);
+    RestrictedPlay restrictPlay = service.findOne(id);
     if (restrictPlay == null) {
       log.info(String.format("Unable to delete. RestrictPlay with id %s not found", id));
-      return new ResponseEntity<RestrictPlay>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<RestrictedPlay>(HttpStatus.NOT_FOUND);
     }
     /**
      * TODO: Addres delete method to service
      */
     // userService.deleteRestrictPlayById(id);
-    return new ResponseEntity<RestrictPlay>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<RestrictedPlay>(HttpStatus.NO_CONTENT);
   }
 
   @RequestMapping(method = RequestMethod.DELETE)
-  public ResponseEntity<RestrictPlay> deleteAll() {
+  public ResponseEntity<RestrictedPlay> deleteAll() {
     log.info("Deleting All RestrictPlays");
 
     /**
      * TODO: Addres delete all method to service
      */
     // userService.deleteAllRestrictPlays();
-    return new ResponseEntity<RestrictPlay>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<RestrictedPlay>(HttpStatus.NO_CONTENT);
   }
 }
