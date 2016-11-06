@@ -85,7 +85,7 @@
       constraintName="restricted_play_number_pk" tableName="restricted_play_number" 
       /> -->
     <addUniqueConstraint columnNames="restricted_play_id, restricted_number"
-      constraintName="restricted_play_number_restricted_number"
+      constraintName="restricted_play_number_uk_restricted_number"
       tableName="restricted_play_number" />
     <addForeignKeyConstraint baseColumnNames="restricted_play_id"
       baseTableName="restricted_play_number" constraintName="restricted_play_number_fk_restricted_play_id"
