@@ -3,13 +3,13 @@
   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-  <changeSet author="rafael.diaz" id="restricted_play-v1">
+  <changeSet author="rafael.diaz" id="bk-restricted_play-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
-        <tableExists tableName="restricted_play" />
+        <tableExists tableName="bk_restricted_play" />
       </not>
     </preConditions>
-    <createTable tableName="restricted_play">
+    <createTable tableName="bk_restricted_play">
       <column name="restricted_play_id" type="BIGINT">
         <constraints primaryKey="true" primaryKeyName="restricted_play_pk"
           nullable="false" />
@@ -38,16 +38,16 @@
         <constraints nullable="false" />
       </column>
     </createTable>
-    <createSequence sequenceName="restricted_play_seq_id" />
+    <createSequence sequenceName="bk_restricted_play_seq_id" />
   </changeSet>
 
-  <changeSet author="rafael.diaz" id="restricted_play_lottery-v1">
+  <changeSet author="rafael.diaz" id="bk-restricted_play_lottery-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
-        <tableExists tableName="restricted_play_lottery" />
+        <tableExists tableName="bk_restricted_play_lottery" />
       </not>
     </preConditions>
-    <createTable tableName="restricted_play_lottery">
+    <createTable tableName="bk_restricted_play_lottery">
       <column name="restricted_play_id" type="BIGINT">
         <constraints nullable="false" />
       </column>
@@ -56,24 +56,24 @@
       </column>
     </createTable>
     <addPrimaryKey columnNames="restricted_play_id, restricted_lottery_name"
-      constraintName="restricted_play_lottery_pk" tableName="restricted_play_lottery" />
+      constraintName="restricted_play_lottery_pk" tableName="bk_restricted_play_lottery" />
     <!-- <addUniqueConstraint columnNames="restricted_play_id, restricted_lottery_name" 
-      constraintName="restricted_play_lottery_restricted_lottery_name" tableName="restricted_play_lottery" 
+      constraintName="restricted_play_lottery_restricted_lottery_name" tableName="bk_restricted_play_lottery" 
       /> -->
     <addForeignKeyConstraint baseColumnNames="restricted_play_id"
-      baseTableName="restricted_play_lottery" constraintName="restricted_play_lottery_fk_restricted_play_id"
+      baseTableName="bk_restricted_play_lottery" constraintName="restricted_play_lottery_fk_restricted_play_id"
       deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
       onUpdate="NO ACTION" referencedColumnNames="restricted_play_id"
-      referencedTableName="restricted_play" />
+      referencedTableName="bk_restricted_play" />
   </changeSet>
 
-  <changeSet author="rafael.diaz" id="restricted_play_number-v1">
+  <changeSet author="rafael.diaz" id="bk-restricted_play_number-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
-        <tableExists tableName="restricted_play_number" />
+        <tableExists tableName="bk_restricted_play_number" />
       </not>
     </preConditions>
-    <createTable tableName="restricted_play_number">
+    <createTable tableName="bk_restricted_play_number">
       <column name="restricted_play_id" type="BIGINT">
         <constraints nullable="false" />
       </column>
@@ -82,16 +82,16 @@
       </column>
     </createTable>
     <!-- <addPrimaryKey columnNames="restricted_play_id, restricted_number" 
-      constraintName="restricted_play_number_pk" tableName="restricted_play_number" 
+      constraintName="restricted_play_number_pk" tableName="bk_restricted_play_number" 
       /> -->
     <addUniqueConstraint columnNames="restricted_play_id, restricted_number"
       constraintName="restricted_play_number_uk_restricted_number"
-      tableName="restricted_play_number" />
+      tableName="bk_restricted_play_number" />
     <addForeignKeyConstraint baseColumnNames="restricted_play_id"
-      baseTableName="restricted_play_number" constraintName="restricted_play_number_fk_restricted_play_id"
+      baseTableName="bk_restricted_play_number" constraintName="restricted_play_number_fk_restricted_play_id"
       deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
       onUpdate="NO ACTION" referencedColumnNames="restricted_play_id"
-      referencedTableName="restricted_play" />
+      referencedTableName="bk_restricted_play" />
   </changeSet>
 
 </databaseChangeLog>

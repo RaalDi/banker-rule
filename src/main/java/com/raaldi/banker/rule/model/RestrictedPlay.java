@@ -34,9 +34,9 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "bk_restricted_play")
 @Cacheable(true)
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "RestrictedPlay")
-@Table(name = "restricted_play")
 @NamedQueries({ @NamedQuery(name = "RestrictedPlay.findAll", query = "SELECT c FROM RestrictedPlay c") })
 @Data
 @Builder
@@ -48,8 +48,8 @@ public class RestrictedPlay extends AbstractModel {
   private static final long serialVersionUID = -3936838944769073574L;
 
   @Id
-  @SequenceGenerator(name = "restricted-play-seq-gen", sequenceName = "restricted_play_seq_id", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restricted-play-seq-gen")
+  @SequenceGenerator(name = "bk-restricted-play-seq-gen", sequenceName = "bk_restricted_play_seq_id", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bk-restricted-play-seq-gen")
   @Column(name = "restricted_play_id")
   private long restrictedPlayid;
 
@@ -59,12 +59,12 @@ public class RestrictedPlay extends AbstractModel {
 
   @NotEmpty
   @ElementCollection
-  @CollectionTable(name = "restricted_play_lottery", joinColumns = { @JoinColumn(name = "restricted_play_id") })
+  @CollectionTable(name = "bk_restricted_play_lottery", joinColumns = { @JoinColumn(name = "restricted_play_id") })
   private Set<RestrictedPlayLottery> lotteries = new HashSet<RestrictedPlayLottery>();
 
   @NotEmpty
   @ElementCollection
-  @CollectionTable(name = "restricted_play_number", joinColumns = {
+  @CollectionTable(name = "bk_restricted_play_number", joinColumns = {
       @JoinColumn(name = "restricted_play_id") }, uniqueConstraints = @UniqueConstraint(columnNames = {
           "restricted_play_id", "restricted_number" }))
   private Set<RestrictedPlayNumber> numbers = Collections.emptySet();
