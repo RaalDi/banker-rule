@@ -3,7 +3,7 @@
   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-  <changeSet author="rafael.diaz" id="bk-restricted_play-v1" context="production">
+  <changeSet author="rafael.diaz" id="bk-restricted-play-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="bk_restricted_play" />
@@ -41,7 +41,7 @@
     <createSequence sequenceName="bk_restricted_play_seq_id" />
   </changeSet>
 
-  <changeSet author="rafael.diaz" id="bk-restricted_play_lottery-v1" context="production">
+  <changeSet author="rafael.diaz" id="bk-restricted-play-lottery-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="bk_restricted_play_lottery" />
@@ -67,7 +67,7 @@
       referencedTableName="bk_restricted_play" />
   </changeSet>
 
-  <changeSet author="rafael.diaz" id="bk-restricted_play_number-v1" context="production">
+  <changeSet author="rafael.diaz" id="bk-restricted-play-number-v1" context="production">
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="bk_restricted_play_number" />
