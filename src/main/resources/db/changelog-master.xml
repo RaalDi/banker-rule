@@ -11,7 +11,7 @@
     </preConditions>
     <createTable tableName="bk_restricted_play">
       <column name="restricted_play_id" type="BIGINT">
-        <constraints primaryKey="true" primaryKeyName="restricted_play_pk"
+        <constraints primaryKey="true" primaryKeyName="bk_restricted_play_pk"
           nullable="false" />
       </column>
       <column name="active" type="BOOL" defaultValueBoolean="false">
@@ -56,12 +56,12 @@
       </column>
     </createTable>
     <addPrimaryKey columnNames="restricted_play_id, restricted_lottery_name"
-      constraintName="restricted_play_lottery_pk" tableName="bk_restricted_play_lottery" />
+      constraintName="bk_restricted_play_lottery_pk" tableName="bk_restricted_play_lottery" />
     <!-- <addUniqueConstraint columnNames="restricted_play_id, restricted_lottery_name" 
-      constraintName="restricted_play_lottery_restricted_lottery_name" tableName="bk_restricted_play_lottery" 
+      constraintName="bk_restricted_play_lottery_restricted_lottery_name" tableName="bk_restricted_play_lottery" 
       /> -->
     <addForeignKeyConstraint baseColumnNames="restricted_play_id"
-      baseTableName="bk_restricted_play_lottery" constraintName="restricted_play_lottery_fk_restricted_play_id"
+      baseTableName="bk_restricted_play_lottery" constraintName="bk_restricted_play_lottery_fk_restricted_play_id"
       deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
       onUpdate="NO ACTION" referencedColumnNames="restricted_play_id"
       referencedTableName="bk_restricted_play" />
@@ -82,13 +82,13 @@
       </column>
     </createTable>
     <!-- <addPrimaryKey columnNames="restricted_play_id, restricted_number" 
-      constraintName="restricted_play_number_pk" tableName="bk_restricted_play_number" 
+      constraintName="bk_restricted_play_number_pk" tableName="bk_restricted_play_number" 
       /> -->
     <addUniqueConstraint columnNames="restricted_play_id, restricted_number"
-      constraintName="restricted_play_number_uk_restricted_number"
+      constraintName="bk_restricted_play_number_uk_restricted_number"
       tableName="bk_restricted_play_number" />
     <addForeignKeyConstraint baseColumnNames="restricted_play_id"
-      baseTableName="bk_restricted_play_number" constraintName="restricted_play_number_fk_restricted_play_id"
+      baseTableName="bk_restricted_play_number" constraintName="bk_restricted_play_number_fk_restricted_play_id"
       deferrable="false" initiallyDeferred="false" onDelete="NO ACTION"
       onUpdate="NO ACTION" referencedColumnNames="restricted_play_id"
       referencedTableName="bk_restricted_play" />
